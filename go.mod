@@ -2,7 +2,10 @@ module main
 
 go 1.22.5
 
-require github.com/labstack/echo v3.3.10+incompatible
+require (
+	github.com/labstack/echo v3.3.10+incompatible
+	github.com/mattn/go-sqlite3 v1.14.24
+)
 
 require (
 	github.com/labstack/gommon v0.4.2 // indirect
