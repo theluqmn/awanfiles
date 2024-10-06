@@ -8,13 +8,14 @@ import (
 )
 
 func main() {
-	// Initialize database connection
+	// Database
 	db, err := user.DatabaseOpen()
 	if err != nil {
 		utils.LogFatal("Failed to open database: " + err.Error())
 	}
 	defer db.Close()
 
+	// Server
 	server := echo.New()
 	server.GET("/", func(c echo.Context) error {
 		utils.Log("Hello, World!")
@@ -23,5 +24,6 @@ func main() {
 
 	server.GET("/api/account/create", user.CreateAccount)
 
+	// Logging
 	utils.LogFatal(server.Start(":2020").Error())
 }
