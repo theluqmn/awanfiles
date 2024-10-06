@@ -1,6 +1,8 @@
 package main
 
 import (
+	"main/utils"
+
 	"net/http"
 	"github.com/labstack/echo"
 )
@@ -11,5 +13,5 @@ func main() {
 		return c.String(http.StatusOK, "Hello, World!")
 	})
 
-	server.Logger.Fatal(server.Start(":2020"))
+	utils.LogFatal(server.Start(":2020").Error())
 }
