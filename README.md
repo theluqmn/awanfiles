@@ -18,6 +18,23 @@ Upload and store your files in our cloud server. Manage and access your files an
 - Frontend: HTML, served by backend
 - Database: SQLite
 
+## To-do
+
+- [ ] Upload file via API
+  - [ ] Add file to database
+  - [ ] Create file
+  - [ ] Copy file, then write
+  - [ ] Run check to confirm
+- [ ] Download file via API
+  - [ ] Verify file ownership
+  - [ ] Download file in response
+- [ ] Web dashboard
+  - [ ] Landing page
+- [ ] Authentication
+  - [ ] Create user
+  - [ ] Log in
+  - [ ] Verify user on each request
+
 ----
 
 Please note the Awan Files source code cannot be used for commercial purposes. Awan Files is made open-source to provide transparency, build trust and credibility to our users.
