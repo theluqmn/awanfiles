@@ -1,6 +1,8 @@
 package utils
 
 import (
+	"os"
+	"os/exec"
 	"log"
 )
 
@@ -10,4 +12,10 @@ func Log(message string) {
 
 func LogFatal(message string) {
 	log.Fatalf("Fatal: %s\n", message)
+}
+
+func ClearTerminal() {
+	cmd := exec.Command("clear")
+	cmd.Stdout = os.Stdout
+	cmd.Run()
 }

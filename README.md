@@ -20,10 +20,10 @@ Upload and store your files in our cloud server. Manage and access your files an
 
 ## To-do
 
-- [ ] Upload file via API
+- [x] Upload file via API
   - [ ] Add file to database
-  - [ ] Create file
-  - [ ] Copy file, then write
+  - [x] Create file
+  - [x] Copy file, then write
   - [ ] Run check to confirm
 - [ ] Download file via API
   - [ ] Verify file ownership

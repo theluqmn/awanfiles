@@ -10,6 +10,9 @@ import (
 )
 
 func main() {
+	// Clear terminal
+	utils.ClearTerminal()
+
 	// Database
 	db, err := user.DatabaseOpen()
 	if err != nil {
