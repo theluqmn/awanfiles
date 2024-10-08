@@ -6,20 +6,25 @@ import (
 	"github.com/labstack/echo"
 )
 
-func CreateAccount(c echo.Context) error {
-    db := DatabaseGet()
-    stmt, err := db.Prepare("INSERT INTO users (username, password) VALUES (?, ?)")
-    if err != nil {
-        return c.String(http.StatusInternalServerError, "Failed to prepare statement")
-    }
-    defer stmt.Close()
+// func Account(c echo.Context) error {
+//     db := DatabaseGet()
 
-    _, err = stmt.Exec(c.QueryParam("username"), c.QueryParam("password"))
-    if err != nil {
-        return c.String(http.StatusInternalServerError, "Failed to create account")
-    }
+// 	// Check if username and password are provided
+// 	if c.QueryParam("username") == "" || c.QueryParam("password") == "" {
+//         return c.String(http.StatusBadRequest, "Missing username or password")
+//     }
 
-	utils.Log("Created new account, with username " + c.QueryParam("username"))
+//     stmt, err := db.Prepare("INSERT INTO users (username, password) VALUES (?, ?)")
+//     if err != nil {
+//         return c.String(http.StatusInternalServerError, "Failed to prepare statement")
+//     }
+//     defer stmt.Close()
 
-    return c.String(http.StatusOK, "Created account")
-}
+//     _, err = stmt.Exec(c.QueryParam("username"), c.QueryParam("password"))
+//     if err != nil {
+//         return c.String(http.StatusInternalServerError, "Failed to create account")
+//     }
+
+// 	utils.Log("Created new account, with username " + c.QueryParam("username"))
+//     return c.String(http.StatusOK, "Created account")
+// }
