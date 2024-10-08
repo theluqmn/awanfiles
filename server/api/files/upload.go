@@ -4,59 +4,66 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"time"
+
+	// "time"
 
 	"main/utils"
 
 	"net/http"
+
 	"github.com/labstack/echo"
 )
 
 func UploadFile(c echo.Context) error {
-    file, err := c.FormFile("file") // read form file
+	// read from file
+    file, err := c.FormFile("file")
     if err != nil {
         return err
     }
 
+	src, err := file.Open()
+	if err != nil {
+		return err
+	}
+	defer src.Close()
+
+	// variables
 	fileSize := (file.Size / 1024) / 1024 // MB
-	fileName := file.Filename
-	hashName := createFileRecord(fileName, 1)
+	fileName := utils.GetFileName(file.Filename)
+	fileFormat := utils.GetFileFormat(file.Filename)
+	fmt.Printf("Format: %s\n", fileFormat)
+	fileID := utils.Hash(fileName)
 
-    src, err := file.Open() // file source
-    if err != nil {
-        return err
-    }
-    defer src.Close()
-
-    dst, err := os.Create("files/" + hashName) // destination
+	// write to server
+    dst, err := os.Create("files/" + fileID + fileFormat)
     if err != nil {
         return err
     }
     defer dst.Close()
+	
     if _, err = io.Copy(dst, src); err != nil {
-        return err
+		return err
     }
 
-	utils.Log(fmt.Sprintf("New file '%s' uploaded with size: %d MB\n", fileName, fileSize))
-    return c.String(http.StatusOK, fmt.Sprintf("Uploaded successfully as %s", hashName))
+	// record file
+	recordFile(fileID, fileName, fileFormat, 1)
+
+	utils.Log(fmt.Sprintf("New file '%s' (format: %s) uploaded with size: %d MB\nas: %s", fileName, fileFormat, fileSize, fileID))
+    return c.String(http.StatusOK, fmt.Sprintf("Uploaded successfully as %s", fileID))
 }
 
-func createFileRecord(name string, owner int) (hashname string) {
-	// Create a hash of the file name as unique identifier
-	hashname = utils.Hash(name)
-
+// record file in database
+func recordFile(id string, name string, format string, owner int) {
 	db := DatabaseGet()
-	stmt, err := db.Prepare("INSERT INTO files (id, owner) VALUES (?,?)")
+	stmt, err := db.Prepare("INSERT INTO files (id, name, format, owner) VALUES (?, ?, ?, ?)")
 	if err != nil {
-		utils.LogFatal("Failed to prepare statement")
+		utils.LogFatal(err.Error())
 	}
 	defer stmt.Close()
-
-	currentTime := time.Now()
-	_, err = stmt.Exec(hashname, owner)
+	_, err = stmt.Exec(id, name, format, owner)
 	if err != nil {
-		utils.LogFatal("Failed to create file")
+		utils.LogFatal(err.Error())
 	}
 
-	return hashname
+	utils.Log(fmt.Sprintf("Recorded file '%s' in database", id))
 }

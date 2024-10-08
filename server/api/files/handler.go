@@ -23,7 +23,7 @@ func DatabaseOpen() (*sql.DB, error) {
 		if err != nil {
 			return
 		}
-		_, err = db.Exec("CREATE TABLE IF NOT EXISTS files (id INTEGER PRIMARY KEY, owner INTEGER, uploaded TEXT)")
+		_, err = db.Exec("CREATE TABLE IF NOT EXISTS files (id TEXT PRIMARY KEY, name TEXT, format TEXT, owner INTEGER)")
 	})
 	return db, err
 }
