@@ -24,9 +24,9 @@ Upload and store your files in our cloud server. Manage and access your files an
   - [x] Add file to database
   - [x] Create file
   - [x] Copy file, then write
-- [ ] Download file via API
+- [x] Download file via API
   - [ ] Verify file ownership
-  - [ ] Download file in response
+  - [x] Download file as attachment
 - [ ] Web dashboard
   - [ ] Landing page
 - [ ] Authentication
