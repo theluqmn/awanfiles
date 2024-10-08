@@ -2,7 +2,6 @@ package main
 
 import (
 	"main/utils"
-	// "main/server/api/user"
 	"main/server/api/files"
 
 	"net/http"
@@ -10,13 +9,13 @@ import (
 )
 
 func main() {
-	// Clear terminal
+	// clear terminal
 	utils.ClearTerminal()
 
-	// Database
+	// database
 	files.DatabaseOpen()
 
-	// Server
+	// server
 	server := echo.New()
 	server.GET("/", func(c echo.Context) error {
 		utils.Log("Hello, World!")
@@ -26,6 +25,6 @@ func main() {
 	server.POST("/api/files", files.UploadFile)
 	server.GET("/api/files/:id", files.DownloadFile)
 
-	// Logging
+	// logging
 	utils.LogFatal(server.Start(":2020").Error())
 }

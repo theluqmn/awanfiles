@@ -35,12 +35,12 @@ func UploadFile(c echo.Context) error {
 	// write to server
     dst, err := os.Create("files/" + fileID + fileFormat)
     if err != nil {
-        return err
+        utils.LogError(err.Error())
     }
     defer dst.Close()
 	
     if _, err = io.Copy(dst, src); err != nil {
-		return err
+		utils.LogError(err.Error())
     }
 
 	// record file

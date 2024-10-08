@@ -3,6 +3,8 @@ package files
 
 import (
 	"database/sql"
+	"main/utils"
+
 	_ "github.com/mattn/go-sqlite3"
 
 	"sync"
@@ -18,11 +20,11 @@ func DatabaseOpen() (*sql.DB, error) {
 	once.Do(func() {
 		db, err = sql.Open("sqlite3", "server/database/files.db")
 		if err != nil {
-			return
+			utils.LogError(err.Error())
 		}
 		err = db.Ping() // Ensure the database connection is established
 		if err != nil {
-			return
+			utils.LogError(err.Error())
 		}
 		_, err = db.Exec("CREATE TABLE IF NOT EXISTS files (id TEXT PRIMARY KEY, name TEXT, format TEXT, owner INTEGER)")
 	})
