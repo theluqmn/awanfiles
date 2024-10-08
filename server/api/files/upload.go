@@ -1,3 +1,4 @@
+// functions for handling file uploads.
 package files
 
 import (
@@ -5,12 +6,9 @@ import (
 	"io"
 	"os"
 
-	// "time"
-
 	"main/utils"
-
+	
 	"net/http"
-
 	"github.com/labstack/echo"
 )
 

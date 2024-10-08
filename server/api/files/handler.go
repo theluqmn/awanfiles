@@ -1,3 +1,4 @@
+// functions for handling database operations related to files.
 package files
 
 import (

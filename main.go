@@ -23,7 +23,8 @@ func main() {
 		return c.String(http.StatusOK, "Hello, World!")
 	})
 
-	server.POST("/api/file/upload", files.UploadFile)
+	server.POST("/api/files", files.UploadFile)
+	server.GET("/api/files/:id", files.DownloadFile)
 
 	// Logging
 	utils.LogFatal(server.Start(":2020").Error())
