@@ -2,7 +2,7 @@ package main
 
 import (
 	"main/utils"
-	"main/server/api/user"
+	// "main/server/api/user"
 	"main/server/api/files"
 
 	"net/http"
@@ -14,11 +14,7 @@ func main() {
 	utils.ClearTerminal()
 
 	// Database
-	db, err := user.DatabaseOpen()
-	if err != nil {
-		utils.LogFatal("Failed to open database: " + err.Error())
-	}
-	defer db.Close()
+	files.DatabaseOpen()
 
 	// Server
 	server := echo.New()
@@ -27,7 +23,6 @@ func main() {
 		return c.String(http.StatusOK, "Hello, World!")
 	})
 
-	// server.GET("/api/account/create", user.CreateAccount)
 	server.POST("/api/file/upload", files.UploadFile)
 
 	// Logging

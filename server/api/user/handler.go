@@ -12,7 +12,7 @@ var (
 	once sync.Once
 )
 
-func DatabaseOpen() (*sql.DB, error) {
+func DatabaseOpen(){
 	var err error
 	once.Do(func() {
 		db, err = sql.Open("sqlite3", "server/database/users.db")
@@ -25,7 +25,6 @@ func DatabaseOpen() (*sql.DB, error) {
 		}
 		_, err = db.Exec("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, username TEXT, password TEXT)")
 	})
-	return db, err
 }
 
 func DatabaseGet() *sql.DB {

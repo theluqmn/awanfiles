@@ -15,7 +15,7 @@ func LogFatal(message string) {
 }
 
 func ClearTerminal() {
-	cmd := exec.Command("clear")
+	cmd := exec.Command("cls")
 	cmd.Stdout = os.Stdout
 	cmd.Run()
 }
