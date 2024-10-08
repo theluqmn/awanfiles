@@ -1,10 +1,12 @@
 package main
 
 import (
+	"main/utils"
+	"main/server/api/user"
+	"main/server/api/files"
+
 	"net/http"
 	"github.com/labstack/echo"
-	"main/server/api/user"
-	"main/utils"
 )
 
 func main() {
@@ -22,7 +24,8 @@ func main() {
 		return c.String(http.StatusOK, "Hello, World!")
 	})
 
-	server.GET("/api/account/create", user.CreateAccount)
+	// server.GET("/api/account/create", user.CreateAccount)
+	server.POST("/api/file/upload", files.UploadFile)
 
 	// Logging
 	utils.LogFatal(server.Start(":2020").Error())
