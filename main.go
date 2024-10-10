@@ -16,6 +16,7 @@ func main() {
 
 	// database
 	files.DatabaseOpen()
+	folders.DatabaseOpen()
 
 	// server
 	server := echo.New()
@@ -24,7 +25,7 @@ func main() {
 		return c.String(http.StatusOK, "Hello, World!")
 	})
 
-	server.POST("/api/folders", folders.CreateFolder)
+	server.POST("/api/folders", folders.Create)
 	server.POST("/api/files", files.UploadFile)
 	server.GET("/api/files/:id", files.DownloadFile)
 

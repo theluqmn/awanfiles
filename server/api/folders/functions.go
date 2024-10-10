@@ -13,7 +13,7 @@ type Folder struct {
 	Owner     string
 }
 
-func CreateFolder(folderID, folderName, folderPath, folderOwner string) {
+func CreateFolder(folderID string, folderName string, folderPath string, folderOwner string) {
 	db := DatabaseGet()
 	stmt, err := db.Prepare("INSERT INTO folders (id, name, type, path, owner) VALUES (?, ?, ?, ?, ?)")
 	if err != nil {

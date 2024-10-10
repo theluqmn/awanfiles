@@ -12,22 +12,12 @@ import (
 
 func Create(c echo.Context) error {
 	// variables
-	folderName := c.QueryParam("folderName")
-	folderPath := c.QueryParam("folderPath")
-	folderOwner := c.QueryParam("folderOwner")
+	folderName := c.QueryParam("name")
+	folderPath := c.QueryParam("path")
+	folderOwner := c.QueryParam("owner")
 	folderID := utils.Hash(folderName)
 
-	// create folder in database
-	db := DatabaseGet()
-	stmt, err := db.Prepare("INSERT INTO folders (id, name, type, path, owner) VALUES (?, ?, ?, ?, ?)")
-	if err != nil {
-		utils.LogFatal(err.Error())
-	}
-	defer stmt.Close()
-	_, err = stmt.Exec(folderID, folderName, "personal", folderPath, folderOwner)
-	if err != nil {
-		utils.LogFatal(err.Error())
-	}
+	CreateFolder(folderID, folderName, folderPath, folderOwner)
 
 	utils.Log("New folder created")
 	return c.String(http.StatusOK, fmt.Sprintf("Created new folder '%s' with ID: %s", folderName, folderID))
