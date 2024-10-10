@@ -26,7 +26,7 @@ func DatabaseOpen() (*sql.DB, error) {
 		if err != nil {
 			utils.LogError(err.Error())
 		}
-		_, err = db.Exec("CREATE TABLE IF NOT EXISTS folders (id TEXT PRIMARY KET, name TEXT, type TEXT, path TEXT, owner INTEGER)")
+		_, err = db.Exec("CREATE TABLE IF NOT EXISTS folders (id TEXT PRIMARY KEY, name TEXT, type TEXT, path TEXT, owner INTEGER)")
 	})
 	return db, err
 }
