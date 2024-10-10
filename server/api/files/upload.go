@@ -26,7 +26,7 @@ func UploadFile(c echo.Context) error {
 	defer src.Close()
 
 	// variables
-	fileSize := (file.Size / 1024) / 1024 // MB
+	fileSize := (file.Size / 1024) / 1024 // unit: MB
 	fileName := utils.GetFileName(file.Filename)
 	fileFormat := utils.GetFileFormat(file.Filename)
 	fmt.Printf("Format: %s\n", fileFormat)
@@ -44,14 +44,14 @@ func UploadFile(c echo.Context) error {
     }
 
 	// record file
-	recordFile(fileID, fileName, fileFormat, 1)
+	RecordFile(fileID, fileName, fileFormat, 1)
 
 	utils.Log(fmt.Sprintf("New file '%s' (format: %s) uploaded with size: %d MB\nas: %s", fileName, fileFormat, fileSize, fileID))
     return c.String(http.StatusOK, fmt.Sprintf("Uploaded successfully as %s", fileID))
 }
 
 // record file in database
-func recordFile(id string, name string, format string, owner int) {
+func RecordFile(id string, name string, format string, owner int) {
 	db := DatabaseGet()
 	stmt, err := db.Prepare("INSERT INTO files (id, name, format, owner) VALUES (?, ?, ?, ?)")
 	if err != nil {
