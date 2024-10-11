@@ -8,6 +8,7 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
 )
 
 func main() {
@@ -20,6 +21,12 @@ func main() {
 
 	// server
 	server := echo.New()
+	// middlewares
+	server.Pre(middleware.HTTPSRedirect())
+	server.Pre(middleware.AddTrailingSlash())
+	server.Use(middleware.Secure())
+	server.Use(middleware.CSRF())
+
 	server.GET("/", func(c echo.Context) error {
 		utils.Log("Hello, World!")
 		return c.String(http.StatusOK, "Hello, World!")
