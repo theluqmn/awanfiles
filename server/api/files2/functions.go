@@ -47,3 +47,17 @@ func UploadFile (file *multipart.FileHeader) {
 		utils.LogError(err.Error())
     }
 }
+
+func GetFile(id string) {
+	db := DatabaseGet()
+	stmt, err := db.Prepare("SELECT * FROM files WHERE id = ?")
+	if err != nil {
+		utils.LogFatal(err.Error())
+	}
+	defer stmt.Close()
+	rows, err := stmt.Query(id)
+	if err != nil {
+		utils.LogFatal(err.Error())
+	}
+	defer rows.Close()
+}
