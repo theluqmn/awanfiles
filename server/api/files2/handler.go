@@ -2,8 +2,6 @@
 package files
 
 import (
-	"fmt"
-
 	"main/utils"
 	
 	"net/http"
@@ -18,4 +16,5 @@ func Upload(c echo.Context) error {
 	}
 
 	UploadFile(file)
+	return c.String(http.StatusOK, "Uploaded successfully")
 }
