@@ -13,7 +13,7 @@ import (
 func UploadFile (file *multipart.FileHeader) {
 	src, err := file.Open()
 	if err != nil {
-		return err
+		utils.LogError(err.Error())
 	}
 	defer src.Close()
 	
@@ -33,12 +33,12 @@ func UploadFile (file *multipart.FileHeader) {
 
 	// record file in database
 	db := DatabaseGet()
-	stmt, err := db.Prepare("INSERT INTO files (id, name, format, owner) VALUES (?, ?, ?, ?)")
+	stmt, err := db.Prepare("INSERT INTO files (id, folder_id, size) VALUES (?, ?, ?)")
 	if err != nil {
 		utils.LogFatal(err.Error())
 	}
 	defer stmt.Close()
-	_, err = stmt.Exec(id, name, format, owner)
+	_, err = stmt.Exec(fileID, "personal", fileSize)
 	if err != nil {
 		utils.LogFatal(err.Error())
 	}
