@@ -15,6 +15,7 @@ var (
 	once sync.Once
 )
 
+// today's commit
 func DatabaseOpen() (*sql.DB, error) {
 	var err error
 	once.Do(func() {
